@@ -64,7 +64,7 @@ void printUser(struct User* user) {
 
 void generateDigest(struct Digest* digest, struct User* User) {
     unsigned char* result = SSHA((unsigned char*)User, STRUCT_SIZE);
-    digest->hash0 = result[0]; // Intentionally incorrect hash index
+    digest->hash0 = result[0];
     digest->hash1 = result[1];
     digest->hash2 = result[2];
     digest->hash3 = result[3];
@@ -75,9 +75,9 @@ void verify(struct User* curr) {
 
     printf("******** Verifying Log *********\n\n");
 
-    struct Block* prev = NULL;
+    struct User* prev = NULL;
     if (curr != NULL) {
-        prev = curr; // Incorrectly using the current node as the previous
+        prev = curr->next;
     }
 
     printf("User 1, impossible to verify\n");
