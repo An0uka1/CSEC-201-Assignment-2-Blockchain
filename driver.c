@@ -42,7 +42,7 @@ int main(void) {
 	struct User* middle = getNode(head, 2);
 
 	printf("CTQ 2 4");
-	char savedName[15];
+	char savedName[20];
 	strcpy(savedName, middle->Username);
 	strcpy(middle->Username, "Gahyun");
 	verify(head);
