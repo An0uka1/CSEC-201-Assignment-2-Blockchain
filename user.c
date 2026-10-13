@@ -4,6 +4,8 @@
 #include <windows.h>
 #include "user.h"
 
+unsigned char* SSHA2(const unsigned char* msg, size_t length);
+
 struct User* add(struct User * head, char* Username) {
 	Sleep((rand() % 10 + 1) * 1000);
 
@@ -63,7 +65,7 @@ void printUser(struct User* user) {
 
 
 void generateDigest(struct Digest* digest, struct User* User) {
-    unsigned char* result = SSHA((unsigned char*)User, STRUCT_SIZE);
+    unsigned char* result = SSHA2((unsigned char*)User, STRUCT_SIZE);
     digest->hash0 = result[0];
     digest->hash1 = result[1];
     digest->hash2 = result[2];
@@ -90,9 +92,9 @@ void verify(struct User* curr) {
 
         if (prev != NULL) {
             struct Digest prev_digest_computed;
-            generateDigest(&prev_digest_computed, prev); // Generating digest for the wrong node
+            generateDigest(&prev_digest_computed, prev);
 
-            if (digest_equal(prev_digest_computed, curr->hash)) { // Comparing to the wrong hash
+            if (digest_equal(prev_digest_computed, curr->hash)) { 
                 printf("User %d passed\n", height);
                 printf("\t%-20s", "User Data:");
                 printUser(curr->next);
@@ -114,7 +116,7 @@ void verify(struct User* curr) {
                 return;
             }
         }
-        curr = prev; // Incorrectly using the current node as the next
+        curr = prev; 
         prev = curr->next;
         height++;
     }
